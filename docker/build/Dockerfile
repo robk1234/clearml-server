@@ -12,7 +12,7 @@ COPY --chmod=744 docker/build/internal_files/build_webapp.sh /tmp/internal_files
 RUN /bin/bash -c '/tmp/internal_files/build_webapp.sh'
 
 FROM python:3.11-slim-bookworm
-COPY --chmod=744 docker/build/internal_files/wrapper.sh /opt/clearml/
+COPY --chmod=744 docker/build/internal_files/entrypoint.sh /opt/clearml/
 COPY --chmod=744 docker/build/internal_files/update_from_env.py /opt/clearml/utilities/
 COPY fileserver /opt/clearml/fileserver/
 COPY apiserver /opt/clearml/apiserver/
@@ -35,4 +35,4 @@ ENV CLEARML_SERVER_VERSION=${VERSION}
 ENV CLEARML_SERVER_BUILD=${BUILD}
 
 WORKDIR /opt/clearml/
-ENTRYPOINT ["/opt/clearml/wrapper.sh"]
+ENTRYPOINT ["/opt/clearml/entrypoint.sh"]
