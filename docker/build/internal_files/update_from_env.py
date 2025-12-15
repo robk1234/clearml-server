@@ -69,8 +69,9 @@ if __name__ == '__main__':
         try:
             return json.loads(v)
         except json.JSONDecodeError as ex:
-            print(f"Error parsing {k} JSON value `{v}`: {str(ex)}")
-            exit(2)
+            if isinstance(v, (int, float, bool, list, dict)):
+                return v  # Return only JSON-compatible types
+            return str(v)  # Convert non-compatible types to string
 
     prefix = args.prefix + args.sep
 
